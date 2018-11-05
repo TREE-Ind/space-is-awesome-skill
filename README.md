@@ -36,6 +36,10 @@ Ever wanted to know what's up? now you can
 - "planet browser" - read data about planets
 - "star browser" - read data about stars
 - [astronomy picture of the day](https://github.com/JarbasAI/ZZZ-astronomy-picture-of-the-day-skill)
+- spaceX launches/capsules/rockets "browser"
+- when is the [next rocket launch](https://github.com/marksev1/Mycroft-SpaceLaunch-Skill)
+- how far away is probe_name
+- probe "browser"
 
 ## Credits 
 JarbasAI
