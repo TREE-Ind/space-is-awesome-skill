@@ -1,7 +1,10 @@
-from mycroft import MycroftSkill, intent_file_handler, intent_handler
-from space import next_cool_thing, astronauts_in_space, iss
 import requests
 from adapt.intent import IntentBuilder
+from mycroft import MycroftSkill, intent_file_handler, intent_handler
+
+from mycroft.util.parse import match_one
+from space import next_cool_thing, astronauts_in_space, iss
+from space.satellites import probe_distances
 from space.bodies.exoplanets import all_cold_zone_planets, \
     all_confirmed_planets, all_exoplanet_around_a_stars, \
     all_exoplanet_around_b_stars, all_exoplanet_around_f_stars, \
@@ -20,7 +23,7 @@ class SpaceIsAwesome(MycroftSkill):
         MycroftSkill.__init__(self)
         self.cool_thing_cache = None
         self.astronauts_cache = None
-
+        self.probe_cache = None
         self.terran_planets_cache = None
         self.subterran_planets_cache = None
         self.superterran_planets_cache = None
@@ -275,6 +278,18 @@ class SpaceIsAwesome(MycroftSkill):
             space_thing = next_cool_thing()
             self.cool_thing_cache = space_thing["description"]
         self.speak(self.cool_thing_cache)
+
+    @intent_file_handler('probe.distance.intent')
+    def handle_probe_distance(self, message):
+        if self.probe_cache is None:
+            self.probe_cache = probe_distances()["spaceprobe_distances"]
+        probe = match_one(message.data["probe"].strip().replace(" ", "-"),
+                          list(
+                              self.probe_cache.keys()))
+        distance = float(self.probe_cache[probe].lower())
+        self.speak_dialog("probe.distance",
+                          {"distance": distance, "probe": probe})
+
 
 
 def create_skill():

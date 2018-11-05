@@ -15,6 +15,7 @@ Ever wanted to know what's up? now you can
  - "how many super earths discovered"
  - "how many discovered exoplanets orbiting M type stars"
  - "how many stars known to have planets"
+ - "how far away is voyager"
  
 ## TODO
 - intent tests
@@ -38,7 +39,6 @@ Ever wanted to know what's up? now you can
 - [astronomy picture of the day](https://github.com/JarbasAI/ZZZ-astronomy-picture-of-the-day-skill)
 - spaceX launches/capsules/rockets "browser"
 - when is the [next rocket launch](https://github.com/marksev1/Mycroft-SpaceLaunch-Skill)
-- how far away is probe_name
 - probe "browser"
 
 ## Credits 
