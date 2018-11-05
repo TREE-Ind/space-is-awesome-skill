@@ -1,8 +1,10 @@
 import requests
 import random
+from os.path import exists, join
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 from mycroft.util.parse import match_one
+from mycroft.util import resolve_resource_file
 from space import next_cool_thing, astronauts_in_space, iss
 from space.satellites import probe_distances
 from space.bodies.exoplanets import all_cold_zone_planets, \
@@ -19,19 +21,6 @@ __author__ = "JarbasAI"
 
 
 class SpaceIsAwesome(MycroftSkill):
-    topics = ["yellow_dwarf", "yellow_white_dwarf", "white_blue_stars",
-              "water_worlds", "universe", "supernova", "super_earth",
-              "star", "solar_system", "reflection_nebulae", "red_dwarfs",
-              "pulsar_planets", "pulsar", "planetary_nebulae",
-              "orange_dwarfs", "neutron_stars", "nebulae", "magnetar",
-              "ice_giants", "hot_jupiters", "gas_giants", "galaxy",
-              "free_floating_planets", "exoplanet", "exoearths",
-              "emission_nebulae", "dark_nebulae", "constellation",
-              "chthonian_worlds", "blackhole", "venus", "uranus", "titan",
-              "sun", "saturn", "neptune", "moon", "mercury", "mars",
-              "jupiter", "io", "ganymede", "europa", "enceladus", "earth",
-              "dwarf_planet", "comet", "callisto", "asteroid"]
-
     def __init__(self):
         MycroftSkill.__init__(self)
         self.cool_thing_cache = None
@@ -60,6 +49,26 @@ class SpaceIsAwesome(MycroftSkill):
 
         self.star_planets_cache = None
 
+    @property
+    def topics(self):
+        voc_filename = "topics"
+        lang = self.lang
+        cache_key = lang + voc_filename
+        if cache_key not in self.voc_match_cache:
+            # Check for both skill resources and mycroft-core resources
+            voc = self.find_resource(voc_filename + '.voc', 'vocab')
+            if not voc:
+                voc = resolve_resource_file(join('text', lang,
+                                                 voc_filename + '.voc'))
+
+            if not voc or not exists(voc):
+                raise FileNotFoundError(
+                    'Could not find {}.voc file'.format(voc_filename))
+
+            with open(voc) as f:
+                self.voc_match_cache[cache_key] = f.read().splitlines()
+        return self.voc_match_cache[cache_key]
+
     @intent_handler(IntentBuilder("ProbeNamesIntent")
                     .require("names").require("probes"))
     def handle_probe_names(self, message):
@@ -84,7 +93,7 @@ class SpaceIsAwesome(MycroftSkill):
 
     @intent_file_handler('space.fact.intent')
     def handle_random_fact(self, message):
-        topic = random.choice(self.topics) + "_facts"
+        topic = random.choice(self.topics).replace(" ", "_") + "_facts"
         self.speak_dialog(topic)
 
     @intent_file_handler('stars.planets.number.intent')
@@ -99,44 +108,50 @@ class SpaceIsAwesome(MycroftSkill):
                     .require("orbiting").require("star"))
     def handle_number_of_star_planets(self, message):
         utterance = message.data["utterance"]
-        # TODO use voc files instead for lang support
-        if "type a" in utterance or "a type" in utterance:
+        if "type a" in utterance or "a type" in utterance or self.voc_match(
+                utterance, "ATypeStar"):
             if self.a_star_planets_cache is None:
                 self.a_star_planets_cache = all_exoplanet_around_a_stars[
                     "exoplanets"]
             number = len(self.a_star_planets_cache)
             star_type = "a"
-        elif "type b" in utterance or "b type" in utterance:
+        elif "type b" in utterance or "b type" in utterance or \
+                self.voc_match(utterance, "BTypeStar"):
             if self.b_star_planets_cache is None:
                 self.b_star_planets_cache = all_exoplanet_around_b_stars[
                     "exoplanets"]
             number = len(self.b_star_planets_cache)
             star_type = "b"
-        elif "type f" in utterance or "f type" in utterance:
+        elif "type f" in utterance or "f type" in utterance or \
+                self.voc_match(utterance, "FTypeStar"):
             if self.f_star_planets_cache is None:
                 self.f_star_planets_cache = all_exoplanet_around_f_stars[
                     "exoplanets"]
             number = len(self.f_star_planets_cache)
             star_type = "f"
-        elif "type k" in utterance or "k type" in utterance:
+        elif "type k" in utterance or "k type" in utterance or \
+                self.voc_match(utterance, "KTypeStar"):
             if self.k_star_planets_cache is None:
                 self.k_star_planets_cache = all_exoplanet_around_k_stars[
                     "exoplanets"]
             number = len(self.k_star_planets_cache)
             star_type = "k"
-        elif "type m" in utterance or "m type" in utterance:
+        elif "type m" in utterance or "m type" in utterance or \
+                self.voc_match(utterance, "MTypeStar"):
             if self.m_star_planets_cache is None:
                 self.m_star_planets_cache = all_exoplanet_around_m_stars[
                     "exoplanets"]
             number = len(self.m_star_planets_cache)
             star_type = "m"
-        elif "type o" in utterance or "o type" in utterance:
+        elif "type o" in utterance or "o type" in utterance or \
+                self.voc_match(utterance, "OTypeStar"):
             if self.o_star_planets_cache is None:
                 self.o_star_planets_cache = all_exoplanet_around_o_stars[
                     "exoplanets"]
             number = len(self.o_star_planets_cache)
             star_type = "o"
-        elif "type g" in utterance or "g type" in utterance:
+        elif "type g" in utterance or "g type" in utterance or \
+                self.voc_match(utterance, "GTypeStar"):
             if self.g_star_planets_cache is None:
                 self.g_star_planets_cache = all_exoplanet_around_g_stars[
                     "exoplanets"]
