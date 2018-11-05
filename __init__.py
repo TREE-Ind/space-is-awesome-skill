@@ -96,6 +96,12 @@ class SpaceIsAwesome(MycroftSkill):
         topic = random.choice(self.topics).replace(" ", "_") + "_facts"
         self.speak_dialog(topic)
 
+    @intent_handler(IntentBuilder("SpaceFactIntent")
+                    .require("fact").require("topic"))
+    def handle_fact(self, message):
+        topic = message.data["topics"].replace(" ", "_") + "_facts"
+        self.speak_dialog(topic)
+
     @intent_file_handler('stars.planets.number.intent')
     def handle_number_of_stars_with_planets(self, message):
         if self.star_planets_cache is None:
