@@ -171,8 +171,8 @@ class SpaceIsAwesome(MycroftSkill):
         self.speak_dialog("planet.number",
                           {"number": number, "type": "terran"})
 
-    @intent_handler(IntentBuilder("SubterranExoplanetsIntent")
-                    .require("how_many").require("exoplanets")
+    @intent_handler(IntentBuilder("SuperterranExoplanetsIntent")
+                    .require("how_many").optionally("exoplanets")
                     .require("superterran"))
     def handle_number_of_superterran_planets(self, message):
         if self.terran_planets_cache is None:
@@ -183,7 +183,7 @@ class SpaceIsAwesome(MycroftSkill):
                           {"number": number, "type": "superterran"})
 
     @intent_handler(IntentBuilder("SubterranExoplanetsIntent")
-                    .require("how_many").require("exoplanets")
+                    .require("how_many").op("exoplanets")
                     .require("subterran"))
     def handle_number_of_subterran_planets(self, message):
         if self.terran_planets_cache is None:
