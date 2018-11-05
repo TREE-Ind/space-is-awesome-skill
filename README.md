@@ -16,6 +16,27 @@ Ever wanted to know what's up? now you can
  - "how many discovered exoplanets orbiting M type stars"
  - "how many stars known to have planets"
  
+## TODO
+- intent tests
+- planet data by name
+- planets by distance
+- planets by radius
+- planets by mass
+- stars data by name
+- stars by distance
+- stars by radius
+- stars by mass
+- stars by constellation
+- stars by magnitude
+- stars by spectral type
+- random star/planet
+- [sunspot count](https://github.com/BoatrightTBC/sunspots)
+- asteroid closest to earth
+- ["asteroid browser"](https://github.com/JarbasAI/ZZZ-near-earth-object-tracking-skill)
+- "planet browser" - read data about planets
+- "star browser" - read data about stars
+- [astronomy picture of the day](https://github.com/JarbasAI/ZZZ-astronomy-picture-of-the-day-skill)
+
 ## Credits 
 JarbasAI
 
