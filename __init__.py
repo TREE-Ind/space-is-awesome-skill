@@ -10,7 +10,7 @@ from space.bodies.exoplanets import all_cold_zone_planets, \
     all_hot_zone_planets, all_jovian_planets, all_neptunian_planets, \
     all_subterran_planets, all_superterran_planets, all_terran_planets, \
     all_unconfirmed_planets, all_warm_zone_planets, \
-    stars_known_to_host_exoplanets
+    stars_known_to_host_exoplanets, confirmed_planets_that_transit_host_stars
 
 __author__ = "JarbasAI"
 
@@ -100,7 +100,9 @@ class SpaceIsAwesome(MycroftSkill):
             number = len(self.g_star_planets_cache)
             star_type = "g"
         else:
-            return self.handle_number_of_stars_with_planets(message)
+            # TODO cache like the rest
+            number = len(confirmed_planets_that_transit_host_stars())
+            star_type = "any"
 
         self.speak_dialog("planet.orbiting.star.number",
                           {"number": number, "type": star_type})
