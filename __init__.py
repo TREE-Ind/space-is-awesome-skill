@@ -27,7 +27,10 @@ class SpaceIsAwesome(MycroftSkill):
               "ice_giants", "hot_jupiters", "gas_giants", "galaxy",
               "free_floating_planets", "exoplanet", "exoearths",
               "emission_nebulae", "dark_nebulae", "constellation",
-              "chthonian_worlds", "blackhole"]
+              "chthonian_worlds", "blackhole", "venus", "uranus", "titan",
+              "sun", "saturn", "neptune", "moon", "mercury", "mars",
+              "jupiter", "io", "ganymede", "europa", "enceladus", "earth",
+              "dwarf_planet", "comet", "callisto", "asteroid"]
 
     def __init__(self):
         MycroftSkill.__init__(self)
