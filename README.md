@@ -6,6 +6,8 @@ All about space
 
 Ever wanted to know what's up? now you can
 
+![img](/space.jpg)
+
 ## Examples 
  - "Next cool thing in space"
  - "How many astronauts in orbit"
