@@ -1,7 +1,7 @@
 import requests
+import random
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
-
 from mycroft.util.parse import match_one
 from space import next_cool_thing, astronauts_in_space, iss
 from space.satellites import probe_distances
@@ -19,6 +19,16 @@ __author__ = "JarbasAI"
 
 
 class SpaceIsAwesome(MycroftSkill):
+    topics = ["yellow_dwarf", "yellow_white_dwarf", "white_blue_stars",
+              "water_worlds", "universe", "supernova", "super_earth",
+              "star", "solar_system", "reflection_nebulae", "red_dwarfs",
+              "pulsar_planets", "pulsar", "planetary_nebulae",
+              "orange_dwarfs", "neutron_stars", "nebulae", "magnetar",
+              "ice_giants", "hot_jupiters", "gas_giants", "galaxy",
+              "free_floating_planets", "exoplanet", "exoearths",
+              "emission_nebulae", "dark_nebulae", "constellation",
+              "chthonian_worlds", "blackhole"]
+
     def __init__(self):
         MycroftSkill.__init__(self)
         self.cool_thing_cache = None
@@ -46,6 +56,33 @@ class SpaceIsAwesome(MycroftSkill):
         self.unconfirmed_planets_cache = None
 
         self.star_planets_cache = None
+
+    @intent_handler(IntentBuilder("ProbeNamesIntent")
+                    .require("names").require("probes"))
+    def handle_probe_names(self, message):
+        if self.probe_cache is None:
+            self.probe_cache = probe_distances()["spaceprobe_distances"]
+        names = " ".join(self.probe_cache.keys()).replace("_", " ").replace(
+            "-", " ")
+        self.speak_dialog("probe.names", {"names": names})
+
+    @intent_handler(IntentBuilder("ProbeNumberIntent")
+                    .require("how_many").require("probes"))
+    def handle_probe_number(self, message):
+        if self.probe_cache is None:
+            self.probe_cache = probe_distances()["spaceprobe_distances"]
+        number = len(self.probe_cache)
+        self.speak_dialog("probe.number", {"number": number})
+
+    @intent_file_handler('available.topics.intent')
+    def handle_topics(self, message):
+        topics = " ".join([t.replace("_", " ") for t in self.topics])
+        self.speak_dialog("available.topics.dialog", {"topics": topics})
+
+    @intent_file_handler('space.fact.intent')
+    def handle_random_fact(self, message):
+        topic = random.choice(self.topics) + "_facts"
+        self.speak_dialog(topic)
 
     @intent_file_handler('stars.planets.number.intent')
     def handle_number_of_stars_with_planets(self, message):
@@ -289,7 +326,6 @@ class SpaceIsAwesome(MycroftSkill):
         distance = float(self.probe_cache[probe].lower())
         self.speak_dialog("probe.distance",
                           {"distance": distance, "probe": probe})
-
 
 
 def create_skill():
