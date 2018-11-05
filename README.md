@@ -22,33 +22,6 @@ Ever wanted to know what's up? now you can
  - "how many active probes in space"
  - "which probes do we have in space"
  
-## TODO
-- intent tests
-- info about probes
-- probe launch date
-- probe ROUND-TRIP LIGHT TIME
-- probe speed
-- planet data by name
-- planets by distance
-- planets by radius
-- planets by mass
-- stars data by name
-- stars by distance
-- stars by radius
-- stars by mass
-- stars by constellation
-- stars by magnitude
-- stars by spectral type
-- random star/planet
-- [sunspot count](https://github.com/BoatrightTBC/sunspots)
-- asteroid closest to earth
-- ["asteroid browser"](https://github.com/JarbasAI/ZZZ-near-earth-object-tracking-skill)
-- "planet browser" - read data about planets
-- "star browser" - read data about stars
-- [astronomy picture of the day](https://github.com/JarbasAI/ZZZ-astronomy-picture-of-the-day-skill)
-- spaceX launches/capsules/rockets "browser"
-- when is the [next rocket launch](https://github.com/marksev1/Mycroft-SpaceLaunch-Skill)
-- probe "browser"
 
 ## Credits 
 [JarbasAI](https://jarbasal.github.io)
@@ -64,4 +37,4 @@ Ever wanted to know what's up? now you can
 
 ## Tags
 
-#space 
+#space #educational #trivia #science #knowledge
