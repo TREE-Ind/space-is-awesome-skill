@@ -249,7 +249,7 @@ class SpaceIsAwesome(MycroftSkill):
                           {"number": number, "type": "superterran"})
 
     @intent_handler(IntentBuilder("SubterranExoplanetsIntent")
-                    .require("how_many").op("exoplanets")
+                    .require("how_many").optionally("exoplanets")
                     .require("subterran"))
     def handle_number_of_subterran_planets(self, message):
         if self.terran_planets_cache is None:
